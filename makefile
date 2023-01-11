@@ -6,12 +6,13 @@
 #    By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 02:20:16 by shbi              #+#    #+#              #
-#    Updated: 2023/01/08 01:43:23 by shbi             ###   ########.fr        #
+#    Updated: 2023/01/11 06:03:57 by shbi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= 	cub3d
-SRCS	=	cub3d.c
+SRCS	=	cub3d.c \
+			dda_algo.c libft_functions.c libft_functions_.c
 			
 OBJS	=	$(SRCS:.c=.o)
 HEADR	=	cub3d.h

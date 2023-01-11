@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 02:21:25 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/10 06:22:44 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/11 06:07:38 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,18 @@ int map[MAP_WIDTH][MAP_HEIGHT] =
 	{1 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 },
 	{1 ,4 ,0 ,4 ,0 ,0 ,0 ,0 ,4 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 },
 	{1 ,4 ,0 ,0 ,0 ,0 ,5 ,0 ,4 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 },
-	{1 ,4 ,0 ,4 ,0 ,0 ,0 ,0 ,4 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 },*
+	{1 ,4 ,0 ,4 ,0 ,0 ,0 ,0 ,4 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 },
 	{1 ,4 ,0 ,4 ,4 ,4 ,4 ,4 ,4 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 },
 	{1 ,4 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 },
 	{1 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 },
 	{1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 }
 };
+
+typedef struct s_vec
+{
+	double	x;
+	double	y;
+}	t_vec;
 
 typedef struct s_data
 {
@@ -80,13 +86,8 @@ typedef struct s_draw
 	int	line_height;
 	int	draw_start;
 	int	draw_end;
+	int	color;
 }	t_draw;
-
-typedef struct s_vec
-{
-	double	x;
-	double	y;
-}	t_vec;
 
 //libft functions 
 int		ft_strlen(const char *str);
@@ -97,8 +98,14 @@ char	*ft_strdup(char *s);
 char	*ft_strjoin(char *f_line, char *buffer);
 
 // DDA algorithme
-void	dda_algorithm(t_data *data);
+void	dda_algo(t_data *data);
 void	raycasting(t_data *data);
 void	calcule_delta_dist(t_data *data);
+void	init_data_vec(t_data *data);
+void	calcule_step_and_sidedist(t_data *data);
+void	hit_wall(t_data *data);
+void	calcule_perp_wall_dest(t_data *data);
+void	draw_wall(t_data *data, t_draw *draw);
+void	draw_ray_line(t_data *data, t_draw *draw, int x);
 
 #endif
