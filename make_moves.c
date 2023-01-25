@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   make_moves.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/07 02:21:28 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/25 01:41:49 by shbi             ###   ########.fr       */
+/*   Created: 2023/01/11 20:18:25 by shbi              #+#    #+#             */
+/*   Updated: 2023/01/25 03:43:25 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	dda_algo(t_data *data)
-{
-	raycasting(data);
-}
 
-int	main(void)
-{
-	t_data	data;
 
-	init_data_vec(&data);
-	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
-	dda_algo(&data);
-	mlx_hook(data.win, 2, 0, key_handler, &data);
-	mlx_loop(data.mlx);
+int	key_handler(int keycode, t_data *data)
+{
+	if (keycode == 13) // move up
+		move_up(data);
+	else if (keycode == 1) // move down
+		move_down(data);
+	else if (keycode == 2) // turn left
+		rotate_left(data);
+	else if (keycode == 0) // turn right
+		rotate_right(data);
+	else if (keycode == 53)
+		exit(0);
+	mlx_clear_window(data->mlx, data->win);
+	dda_algo(data);
 	return (0);
 }
