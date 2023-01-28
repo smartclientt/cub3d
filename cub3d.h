@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 02:21:25 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/28 08:33:29 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/28 17:58:50 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,14 @@
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
 
-#define MOVE_SPEED	0.4
+#define MOVE_SPEED	0.1
 #define ROT_SPEED	0.1
 
-#define TEX_WIDTH	1024
-#define TEX_HEIGHT	1024
+#define TEX_WIDTH	800
+#define TEX_HEIGHT	600
+
+int finghadi;
+int achmnjnb;
 
 typedef struct s_vec
 {
@@ -121,5 +124,9 @@ void	rotate_right(t_data	*data);
 // texture
 void	inital_img_texture(t_data *data);
 void	build_texture(t_data *data, t_draw *draw, int x);
+
+
+//zbel hachack
+int	key_handler_(int keycode, t_data *data);
 
 #endif
