@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 12:14:58 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/25 03:45:55 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/28 08:30:55 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int map[MAP_WIDTH][MAP_HEIGHT] =
 
 void	move_up(t_data *data)
 {
-	printf("move up\n");
 	if (map[(int)(data->pos.x + data->dir.x * MOVE_SPEED)][(int)data->pos.y] == 0)
 		data->pos.x += data->dir.x * MOVE_SPEED;
 	if (map[(int)data->pos.x][(int)(data->pos.y + data->dir.y * MOVE_SPEED)] == 0)
@@ -51,7 +50,6 @@ void	move_up(t_data *data)
 
 void	move_down(t_data *data)
 {
-	printf("move down\n");
 	if (map[(int)(data->pos.x - data->dir.x * MOVE_SPEED)][(int)data->pos.y] == 0)
 		data->pos.x -= data->dir.x * MOVE_SPEED;
 	if (map[(int)data->pos.x][(int)(data->pos.y - data->dir.y * MOVE_SPEED)] == 0)
@@ -80,8 +78,8 @@ void	rotate_right(t_data	*data)
 
 void	init_data_vec(t_data *data)
 {
-	data->pos.x = 10;
-	data->pos.y = 12;
+	data->pos.x = 10.2;
+	data->pos.y = 12.6;
 	data->dir.x = 1;
 	data->dir.y = 0;
 	data->plane.x = 0;
@@ -156,7 +154,7 @@ void	calcule_perp_wall_dest(t_data *data)
 		data->perp_wall_dist = data->side_dist.y - data->delta_dist.y;
 }
 
-void	draw_wall(t_data *data, t_draw *draw)
+void	draw_wall(t_data *data, t_draw *draw, int x)
 {
 	draw->line_height = (int)(WIN_HEIGHT / data->perp_wall_dist);
 	draw->draw_start = (-draw->line_height / 2) + (WIN_HEIGHT / 2);
@@ -165,29 +163,70 @@ void	draw_wall(t_data *data, t_draw *draw)
 	draw->draw_end =(draw->line_height / 2) + (WIN_HEIGHT / 2);
 	if (draw->draw_end >= WIN_HEIGHT)
 		draw->draw_end = WIN_HEIGHT - 1;
-	draw->color = 0x0000FF;
-	if (data->side == 1)
-		draw->color = draw->color / 2; 
+	// draw->color = 0x0000FF;
+	// if (data->side == 1)
+	// 	draw->color = draw->color / 2;
+	build_texture(data, draw, x);
+}
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr2 + (y * data->size_line2 + x * (data->bpp2 / 8));
+	*(unsigned int*)dst = color;
+}
+
+void	build_texture(t_data *data, t_draw *draw, int x)
+{
+	int y;
+
+	if (data->side == 0)
+		data->wall_x = data->pos.y + data->perp_wall_dist * data->raydir.y;
+	else
+		data->wall_x = data->pos.x + data->perp_wall_dist * data->raydir.x;
+	data->wall_x = data->wall_x - floor(data->wall_x);
+	data->tex_x = (int)(data->wall_x * (double)(TEX_WIDTH));
+	if (data->side == 0 && data->raydir.x > 0)
+		data->tex_x = TEX_WIDTH - data->tex_x - 1;
+	if (data->side == 1 && data->raydir.y < 0)
+		data->tex_x = TEX_WIDTH - data->tex_x - 1;
+	data->step_ = (double)TEX_HEIGHT / draw->line_height;
+	data->tex_pos = (draw->draw_start - WIN_HEIGHT / 2 + draw->line_height / 2) * data->step_;
+	y = draw->draw_start;
+	while (y < draw->draw_end)
+	{
+		data->tex_y = (int)fmod(data->tex_pos ,TEX_HEIGHT);
+		data->tex_pos = data->tex_pos + data->step_;
+		draw->color = *(int *)(data->color_data + (data->tex_y * data->size_line + data->tex_x * (data->bpp / 8)));
+		if (data->side == 1)
+			draw->color = (draw->color >> 1) & 8355711;
+		// mlx_pixel_put(data->mlx, data->win, x, y, draw->color);
+		my_mlx_pixel_put(data, x, y, draw->color);
+		y++;
+	}
 }
 
 void	draw_ray_line(t_data *data, t_draw *draw, int x)
 {
+	(void) x;
+	(void) data;
 	int y;
 	
 	y = 0;
 	while (y < draw->draw_start)
 	{
-		mlx_pixel_put(data->mlx, data->win, x, y, 0x00FF00);
+		// mlx_pixel_put(data->mlx, data->win, x, y, 0x00FF00);
 		y++;
 	}
 	while (y < draw->draw_end)
 	{
-		mlx_pixel_put(data->mlx, data->win, x, y, draw->color);
+		// mlx_pixel_put(data->mlx, data->win, x, y, draw->color);
 		y++;
 	}
 	while (y < WIN_HEIGHT)
 	{
-		mlx_pixel_put(data->mlx, data->win, x, y, 0xFF0000);
+		// mlx_pixel_put(data->mlx, data->win, x, y, 0xFF0000);
 		y++;
 	}
 }
@@ -196,7 +235,7 @@ void	draw_ray_line(t_data *data, t_draw *draw, int x)
 void	raycasting(t_data *data)
 {
 	t_draw	draw;
-	int	x;
+	int		x;
 
 	x = 0;
 	while (x < WIN_WIDTH)
@@ -213,8 +252,9 @@ void	raycasting(t_data *data)
 		calcule_step_and_sidedist(data);
 		hit_wall(data);
 		calcule_perp_wall_dest(data);
-		draw_wall(data, &draw);
+		draw_wall(data, &draw, x);
 		draw_ray_line(data, &draw, x);
 		x++;
 	}
+	mlx_put_image_to_window(data->mlx, data->win, data->img2, 0, 0);
 }

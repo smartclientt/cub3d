@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 02:21:25 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/25 03:48:57 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/28 08:33:29 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
 
-#define MOVE_SPEED	0.7
-#define ROT_SPEED	0.4
+#define MOVE_SPEED	0.4
+#define ROT_SPEED	0.1
+
+#define TEX_WIDTH	1024
+#define TEX_HEIGHT	1024
 
 typedef struct s_vec
 {
@@ -54,6 +57,29 @@ typedef struct s_data
 	double	camera_x;
 	t_vec	old_dir;
 	t_vec	old_plane;
+	// texture variables
+	void	*img_text1;
+	void	*img_text2;
+	void	*img_text3;
+	void	*img_text4;
+	int		img_width;
+	int		img_height;
+	double	wall_x;
+	int		tex_x;
+	int		tex_y;
+	double	tex_pos;
+	double	step_;
+	char	*color_data;
+	int		bpp;
+	int		size_line;
+	int		endian;
+	// img to draw
+	void	*img2;
+	char	*addr2;
+	int		bpp2;
+	int		size_line2;
+	int		endian2;
+	
 }	t_data;
 
 typedef struct s_draw
@@ -73,22 +99,27 @@ char	*ft_strdup(char *s);
 char	*ft_strjoin(char *f_line, char *buffer);
 
 // DDA algorithme
-void	dda_algo(t_data *data);
+int		dda_algo(t_data *data);
 void	raycasting(t_data *data);
 void	calcule_delta_dist(t_data *data);
 void	init_data_vec(t_data *data);
 void	calcule_step_and_sidedist(t_data *data);
 void	hit_wall(t_data *data);
 void	calcule_perp_wall_dest(t_data *data);
-void	draw_wall(t_data *data, t_draw *draw);
+void	draw_wall(t_data *data, t_draw *draw, int x);
 void	draw_ray_line(t_data *data, t_draw *draw, int x);
 
 // Key handler
 int		key_handler(int keycode, t_data *data);
+int		exit_hook(t_data *data);
 // move and rotate player
 void	move_up(t_data *data);
 void	move_down(t_data *data);
 void	rotate_left(t_data *data);
 void	rotate_right(t_data	*data);
+
+// texture
+void	inital_img_texture(t_data *data);
+void	build_texture(t_data *data, t_draw *draw, int x);
 
 #endif

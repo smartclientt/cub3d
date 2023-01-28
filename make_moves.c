@@ -6,13 +6,11 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:18:25 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/25 03:43:25 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/28 03:10:13 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-
 
 int	key_handler(int keycode, t_data *data)
 {
@@ -26,7 +24,6 @@ int	key_handler(int keycode, t_data *data)
 		rotate_right(data);
 	else if (keycode == 53)
 		exit(0);
-	mlx_clear_window(data->mlx, data->win);
-	dda_algo(data);
+	// mlx_clear_window(data->mlx, data->win);
 	return (0);
 }
