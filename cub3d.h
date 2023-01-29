@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 02:21:25 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/28 17:58:50 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/29 23:28:05 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,21 @@
 # include <math.h>
 # include "get_next_line/get_next_line.h"
 
-# define WIN_WIDTH	720
-# define WIN_HEIGHT	576
+# define WIN_WIDTH	500
+# define WIN_HEIGHT	500
 
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
 
-#define MOVE_SPEED	0.1
+#define MOVE_SPEED	0.3
 #define ROT_SPEED	0.1
 
-#define TEX_WIDTH	800
-#define TEX_HEIGHT	600
+#define TEX_WIDTH	4000
+#define TEX_HEIGHT	6000
 
 int finghadi;
 int achmnjnb;
+int harakat;
 
 typedef struct s_vec
 {
@@ -46,7 +47,7 @@ typedef struct s_data
 {
 	void	*mlx;
 	void	*win;
-	t_vec	pos;	
+	t_vec	pos;
 	t_vec	raydir;
 	t_vec	plane;
 	t_vec	dir;
@@ -60,6 +61,7 @@ typedef struct s_data
 	double	camera_x;
 	t_vec	old_dir;
 	t_vec	old_plane;
+	t_vec	new_dir;
 	// texture variables
 	void	*img_text1;
 	void	*img_text2;
@@ -116,10 +118,10 @@ void	draw_ray_line(t_data *data, t_draw *draw, int x);
 int		key_handler(int keycode, t_data *data);
 int		exit_hook(t_data *data);
 // move and rotate player
-void	move_up(t_data *data);
+void	move(t_data *data);
 void	move_down(t_data *data);
-void	rotate_left(t_data *data);
-void	rotate_right(t_data	*data);
+void	rotate(t_data *data);
+void	slide(t_data *data);
 
 // texture
 void	inital_img_texture(t_data *data);

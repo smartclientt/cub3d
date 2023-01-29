@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 12:14:58 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/28 18:06:30 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/29 22:59:17 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int map[MAP_WIDTH][MAP_HEIGHT] =
 	{1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 }
 };
 
-void	move_up(t_data *data)
+void	move(t_data *data)
 {
 	if (map[(int)(data->pos.x + (finghadi) * data->dir.x * MOVE_SPEED)][(int)data->pos.y] == 0)
 		data->pos.x += (finghadi) * data->dir.x * MOVE_SPEED;
@@ -48,15 +48,17 @@ void	move_up(t_data *data)
 		data->pos.y += (finghadi) * data->dir.y * MOVE_SPEED;
 }
 
-void	move_down(t_data *data)
+void	slide(t_data *data)
 {
-	if (map[(int)(data->pos.x - data->dir.x * MOVE_SPEED)][(int)data->pos.y] == 0)
-		data->pos.x -= data->dir.x * MOVE_SPEED;
-	if (map[(int)data->pos.x][(int)(data->pos.y - data->dir.y * MOVE_SPEED)] == 0)
-		data->pos.y -= data->dir.y * MOVE_SPEED;
+	data->new_dir.x = data->dir.x * cos((M_PI_2)) - data->dir.y * sin((M_PI_2));
+	data->new_dir.y = data->old_dir.x * sin((M_PI_2)) + data->dir.y * cos((M_PI_2));
+	if (map[(int)(data->pos.x + (harakat) * data->new_dir.x * MOVE_SPEED)][(int)data->pos.y] == 0)
+		data->pos.x += (harakat) * data->new_dir.x * MOVE_SPEED;
+	if (map[(int)data->pos.x][(int)(data->pos.y + (harakat) * data->new_dir.y * MOVE_SPEED)] == 0)
+		data->pos.y += (harakat) * data->new_dir.y * MOVE_SPEED;
 }
 
-void	rotate_left(t_data	*data)
+void	rotate(t_data	*data)
 {
 	data->old_dir.x = data->dir.x;
 	data->dir.x = data->dir.x * cos((achmnjnb) * ROT_SPEED) - data->dir.y * sin((achmnjnb)  * ROT_SPEED);
@@ -66,24 +68,15 @@ void	rotate_left(t_data	*data)
 	data->plane.y = data->old_plane.x * sin((achmnjnb) * ROT_SPEED) + data->plane.y * cos((achmnjnb) * ROT_SPEED);
 }
 
-void	rotate_right(t_data	*data)
-{
-	data->old_dir.x = data->dir.x;
-	data->dir.x = data->dir.x * cos(-ROT_SPEED) - data->dir.y * sin(-ROT_SPEED);
-	data->dir.y = data->old_dir.x * sin(-ROT_SPEED) + data->dir.y * cos(-ROT_SPEED);
-	data->old_plane.x = data->plane.x;
-	data->plane.x = data->plane.x * cos(-ROT_SPEED) - data->plane.y * sin(-ROT_SPEED);
-	data->plane.y = data->old_plane.x * sin(-ROT_SPEED) + data->plane.y * cos(-ROT_SPEED);
-}
 
 void	init_data_vec(t_data *data)
 {
-	data->pos.x = 1;
-	data->pos.y = 1;
-	data->dir.x = 0;
-	data->dir.y = -1;
-	data->plane.x = 0.66;
-	data->plane.y = 0;
+	data->pos.x = 12.5;
+	data->pos.y = 12.2;
+	data->dir.x = 1;
+	data->dir.y = 0;
+	data->plane.x = 0;
+	data->plane.y = 0.66;
 }
 
 // need more understanding
@@ -163,9 +156,6 @@ void	draw_wall(t_data *data, t_draw *draw, int x)
 	draw->draw_end =(draw->line_height / 2) + (WIN_HEIGHT / 2);
 	if (draw->draw_end >= WIN_HEIGHT)
 		draw->draw_end = WIN_HEIGHT - 1;
-	// draw->color = 0x0000FF;
-	// if (data->side == 1)
-	// 	draw->color = draw->color / 2;
 	build_texture(data, draw, x);
 }
 
@@ -204,7 +194,6 @@ void	build_texture(t_data *data, t_draw *draw, int x)
 		draw->color = *(int *)(data->color_data + (data->tex_y * data->size_line + data->tex_x * (data->bpp / 8)));
 		if (data->side == 1)
 			draw->color = (draw->color >> 1) & 0x7F7F7F;
-		// mlx_pixel_put(data->mlx, data->win, x, y, draw->color);
 		my_mlx_pixel_put(data, x, y, draw->color);
 		y++;
 	}
@@ -217,14 +206,14 @@ void	draw_ray_line(t_data *data, t_draw *draw, int x)
 	y = 0;
 	while (y < draw->draw_start)
 	{
-		my_mlx_pixel_put(data, x, y, 0x0F3C2F0);
+		my_mlx_pixel_put(data, x, y, 0xdbfdf7);
 		y++;
 	}
 	while (y < draw->draw_end)
 		y++;
 	while (y < WIN_HEIGHT)
 	{
-		my_mlx_pixel_put(data, x, y, 0xFBC191);
+		my_mlx_pixel_put(data, x, y, 0xdbfdf7);
 		y++;
 	}
 }
@@ -236,8 +225,9 @@ void	raycasting(t_data *data)
 	int		x;
 
 	x = 0;
-	move_up(data);
-	rotate_left(data);
+	move(data);
+	rotate(data);
+	slide(data);
 	while (x < WIN_WIDTH)
 	{
 		// this is for calulcul every ray position and direction in the screen
