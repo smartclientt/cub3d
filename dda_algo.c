@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 12:14:58 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/29 22:59:17 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/30 16:26:35 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,41 +42,41 @@ int map[MAP_WIDTH][MAP_HEIGHT] =
 
 void	move(t_data *data)
 {
-	if (map[(int)(data->pos.x + (finghadi) * data->dir.x * MOVE_SPEED)][(int)data->pos.y] == 0)
-		data->pos.x += (finghadi) * data->dir.x * MOVE_SPEED;
-	if (map[(int)data->pos.x][(int)(data->pos.y + (finghadi) * data->dir.y * MOVE_SPEED)] == 0)
-		data->pos.y += (finghadi) * data->dir.y * MOVE_SPEED;
+	if (map[(int)(data->pos.x + (data->move) * data->dir.x * MOVE_SPEED)][(int)data->pos.y] == 0)
+		data->pos.x += (data->move) * data->dir.x * MOVE_SPEED;
+	if (map[(int)data->pos.x][(int)(data->pos.y + (data->move) * data->dir.y * MOVE_SPEED)] == 0)
+		data->pos.y += (data->move) * data->dir.y * MOVE_SPEED;
 }
 
 void	slide(t_data *data)
 {
 	data->new_dir.x = data->dir.x * cos((M_PI_2)) - data->dir.y * sin((M_PI_2));
 	data->new_dir.y = data->old_dir.x * sin((M_PI_2)) + data->dir.y * cos((M_PI_2));
-	if (map[(int)(data->pos.x + (harakat) * data->new_dir.x * MOVE_SPEED)][(int)data->pos.y] == 0)
-		data->pos.x += (harakat) * data->new_dir.x * MOVE_SPEED;
-	if (map[(int)data->pos.x][(int)(data->pos.y + (harakat) * data->new_dir.y * MOVE_SPEED)] == 0)
-		data->pos.y += (harakat) * data->new_dir.y * MOVE_SPEED;
+	if (map[(int)(data->pos.x + (data->slide) * data->new_dir.x * MOVE_SPEED)][(int)data->pos.y] == 0)
+		data->pos.x += (data->slide) * data->new_dir.x * MOVE_SPEED;
+	if (map[(int)data->pos.x][(int)(data->pos.y + (data->slide) * data->new_dir.y * MOVE_SPEED)] == 0)
+		data->pos.y += (data->slide) * data->new_dir.y * MOVE_SPEED;
 }
 
 void	rotate(t_data	*data)
 {
 	data->old_dir.x = data->dir.x;
-	data->dir.x = data->dir.x * cos((achmnjnb) * ROT_SPEED) - data->dir.y * sin((achmnjnb)  * ROT_SPEED);
-	data->dir.y = data->old_dir.x * sin((achmnjnb) * ROT_SPEED) + data->dir.y * cos((achmnjnb) * ROT_SPEED);
+	data->dir.x = data->dir.x * cos((data->rotate) * ROT_SPEED) - data->dir.y * sin((data->rotate)  * ROT_SPEED);
+	data->dir.y = data->old_dir.x * sin((data->rotate) * ROT_SPEED) + data->dir.y * cos((data->rotate) * ROT_SPEED);
 	data->old_plane.x = data->plane.x;
-	data->plane.x = data->plane.x * cos((achmnjnb) * ROT_SPEED) - data->plane.y * sin((achmnjnb) * ROT_SPEED);
-	data->plane.y = data->old_plane.x * sin((achmnjnb) * ROT_SPEED) + data->plane.y * cos((achmnjnb) * ROT_SPEED);
+	data->plane.x = data->plane.x * cos((data->rotate) * ROT_SPEED) - data->plane.y * sin((data->rotate) * ROT_SPEED);
+	data->plane.y = data->old_plane.x * sin((data->rotate) * ROT_SPEED) + data->plane.y * cos((data->rotate) * ROT_SPEED);
 }
 
 
 void	init_data_vec(t_data *data)
 {
-	data->pos.x = 12.5;
-	data->pos.y = 12.2;
-	data->dir.x = 1;
-	data->dir.y = 0;
-	data->plane.x = 0;
-	data->plane.y = 0.66;
+	data->pos.x = 12;
+	data->pos.y = 10;
+	data->dir.x = 0;
+	data->dir.y = -1;
+	data->plane.x = 0.66;
+	data->plane.y = 0;
 }
 
 // need more understanding
@@ -95,7 +95,6 @@ void	calcule_delta_dist(t_data *data)
 void	calcule_step_and_sidedist(t_data *data)
 {
 	data->hit = 0;
-	// to calcule the sidedist x and y based on the x and y position
 	if (data->raydir.x < 0)
 	{
 		data->step.x = -1;
@@ -117,6 +116,8 @@ void	calcule_step_and_sidedist(t_data *data)
 		data->side_dist.y = (data->map.y + 1.0 - data->pos.y) * data->delta_dist.y;
 	}
 }
+
+int test;
 
 void	hit_wall(t_data *data)
 {
@@ -163,46 +164,88 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	int	index;
 
-	index = y * data->size_line2 + x * (data->bpp2 / 8);
-	data->addr2[index++] = color;
-	data->addr2[index++] = color >> 8;
-	data->addr2[index++] = color >> 16;
-	data->addr2[index] = color >> 24;
+	index = y * data->size_line_img + x * (data->bpp_img_win / 8);
+	data->addr_win_img[index++] = color;
+	data->addr_win_img[index++] = color >> 8;
+	data->addr_win_img[index++] = color >> 16;
+	data->addr_win_img[index] = color >> 24;
+}
+
+void	texture_info(t_data *data)
+{
+	if (data->side == 1 && data->raydir.y > 0)
+	{
+		data->color_data = data->color_data_2;
+		data->img_height = data->img_height_2;	
+		data->img_width = data->img_width_2;
+	}
+	if (data->side == 1 && data->raydir.y < 0)
+	{
+		data->color_data = data->color_data_3;
+		data->img_height = data->img_height_3;	
+		data->img_width = data->img_width_3;
+	}
+	if (data->side == 0 && data->raydir.x > 0)
+	{
+		data->color_data = data->color_data_1;
+		data->img_width = data->img_width_1;
+		data->img_height = data->img_height_1;
+	}
+	if (data->side == 0 && data->raydir.x < 0)
+	{
+		data->color_data = data->color_data_4;
+		data->img_height = data->img_height_4;
+		data->img_width = data->img_width_4;
+	}
 }
 
 void	build_texture(t_data *data, t_draw *draw, int x)
 {
 	int y;
 
+	texture_info(data);
 	if (data->side == 0)
 		data->wall_x = data->pos.y + data->perp_wall_dist * data->raydir.y;
 	else
 		data->wall_x = data->pos.x + data->perp_wall_dist * data->raydir.x;
 	data->wall_x = data->wall_x - floor(data->wall_x);
-	data->tex_x = (int)(data->wall_x * (double)(TEX_WIDTH));
+	data->tex_x = (int)(data->wall_x * (double)(data->img_width));
 	if (data->side == 0 && data->raydir.x > 0)
-		data->tex_x = TEX_WIDTH - data->tex_x - 1;
+		data->tex_x = data->img_width - data->tex_x - 1;
 	if (data->side == 1 && data->raydir.y < 0)
-		data->tex_x = TEX_WIDTH - data->tex_x - 1;
-	data->step_ = (double)TEX_HEIGHT / draw->line_height;
+		data->tex_x = data->img_width - data->tex_x - 1;
+	data->step_ = (double)data->img_height / draw->line_height;
 	data->tex_pos = (draw->draw_start - WIN_HEIGHT / 2 + draw->line_height / 2) * data->step_;
 	y = draw->draw_start;
 	while (y < draw->draw_end)
 	{
-		data->tex_y = (int)fmod(data->tex_pos ,TEX_HEIGHT);
+		data->tex_y = (int)fmod(data->tex_pos ,data->img_height);
 		data->tex_pos = data->tex_pos + data->step_;
-		draw->color = *(int *)(data->color_data + (data->tex_y * data->size_line + data->tex_x * (data->bpp / 8)));
-		if (data->side == 1)
-			draw->color = (draw->color >> 1) & 0x7F7F7F;
+		whish_texture(data, draw);
 		my_mlx_pixel_put(data, x, y, draw->color);
 		y++;
 	}
 }
 
+void	whish_texture(t_data *data, t_draw *draw)
+{
+	if (data->side == 1 && data->raydir.y > 0)
+			draw->color = *(int *)(data->color_data + (data->tex_y * data->size_line_2 + data->tex_x * (data->bpp_2 / 8)));
+		else if (data->side == 1 && data->raydir.y < 0)
+			draw->color = *(int *)(data->color_data + (data->tex_y * data->size_line_3 + data->tex_x * (data->bpp_3 / 8)));
+		else if (data->side == 0 && data->raydir.x > 0)
+			draw->color = *(int *)(data->color_data + (data->tex_y * data->size_line_1 + data->tex_x * (data->bpp_1 / 8)));
+		else if (data->side == 0 && data->raydir.x < 0)
+			draw->color = *(int *)(data->color_data + (data->tex_y * data->size_line_4 + data->tex_x * (data->bpp_4 / 8)));
+		if (data->side == 1)
+			draw->color = (draw->color >> 1) & 0x7F7F7F;
+}
+
 void	draw_ray_line(t_data *data, t_draw *draw, int x)
 {
 	int y;
-	
+	(void)data;
+	(void)x;
 	y = 0;
 	while (y < draw->draw_start)
 	{
@@ -245,5 +288,5 @@ void	raycasting(t_data *data)
 		draw_ray_line(data, &draw, x);
 		x++;
 	}
-	mlx_put_image_to_window(data->mlx, data->win, data->img2, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->win_img, 0, 0);
 }

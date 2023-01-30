@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 02:21:25 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/29 23:28:05 by shbi             ###   ########.fr       */
+/*   Updated: 2023/01/30 16:24:03 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,14 @@
 # include <math.h>
 # include "get_next_line/get_next_line.h"
 
-# define WIN_WIDTH	500
-# define WIN_HEIGHT	500
+# define WIN_WIDTH	800
+# define WIN_HEIGHT	600
 
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
 
-#define MOVE_SPEED	0.3
+#define MOVE_SPEED	0.1
 #define ROT_SPEED	0.1
-
-#define TEX_WIDTH	4000
-#define TEX_HEIGHT	6000
-
-int finghadi;
-int achmnjnb;
-int harakat;
 
 typedef struct s_vec
 {
@@ -62,6 +55,9 @@ typedef struct s_data
 	t_vec	old_dir;
 	t_vec	old_plane;
 	t_vec	new_dir;
+	int		move;
+	int		slide;
+	int		rotate;
 	// texture variables
 	void	*img_text1;
 	void	*img_text2;
@@ -69,21 +65,42 @@ typedef struct s_data
 	void	*img_text4;
 	int		img_width;
 	int		img_height;
+	int		img_width_1;
+	int		img_height_1;
+	int		img_width_2;
+	int		img_height_2;
+	int		img_width_3;
+	int		img_height_3;
+	int		img_width_4;
+	int		img_height_4;
 	double	wall_x;
 	int		tex_x;
 	int		tex_y;
 	double	tex_pos;
 	double	step_;
 	char	*color_data;
-	int		bpp;
-	int		size_line;
-	int		endian;
+	char	*color_data_1;
+	char	*color_data_2;
+	char	*color_data_3;
+	char	*color_data_4;
+	int		bpp_1;
+	int		size_line_1;
+	int		endian_1;
+	int		bpp_2;
+	int		size_line_2;
+	int		endian_2;
+	int		bpp_3;
+	int		size_line_3;
+	int		endian_3;
+	int		bpp_4;
+	int		size_line_4;
+	int		endian_4;
 	// img to draw
-	void	*img2;
-	char	*addr2;
-	int		bpp2;
-	int		size_line2;
-	int		endian2;
+	void	*win_img;
+	char	*addr_win_img;
+	int		bpp_img_win;
+	int		size_line_img;
+	int		endian_img_win;
 	
 }	t_data;
 
@@ -126,6 +143,8 @@ void	slide(t_data *data);
 // texture
 void	inital_img_texture(t_data *data);
 void	build_texture(t_data *data, t_draw *draw, int x);
+void	whish_texture(t_data *data, t_draw *draw);
+void	texture_info(t_data *data);
 
 
 //zbel hachack
