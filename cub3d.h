@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ael-idri <ael-idri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 02:21:25 by shbi              #+#    #+#             */
-/*   Updated: 2023/02/01 23:02:54 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 23:38:30 by ael-idri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,5 @@ char	*mmlx_get_data_addr(void *img, int *bpp, int *size_line, int *endian);
 void	mmlx_destroy_window(void *mlx_ptr, void *img_ptr);
 void	mmlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr);
 void	mmlx_destroy_image(void *mlx_ptr, void *img_ptr);
-
 
 #endif

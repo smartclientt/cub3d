@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ael-idri <ael-idri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 02:21:28 by shbi              #+#    #+#             */
-/*   Updated: 2023/02/01 23:02:21 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 23:40:19 by ael-idri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	if (ac != 2)
-	{
-		write (2, "Error invalide arg\n", 20);
-		return (1);
-	}
+		return (ft_putstr_fd("Error invalide arg\n", 2), 1);
 	if ((WIN_WIDTH > 1800 || WIN_HEIGHT < 1)
 		|| (WIN_WIDTH > 5120 || WIN_HEIGHT < 1))
 	{
