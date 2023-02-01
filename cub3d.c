@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 02:21:28 by shbi              #+#    #+#             */
-/*   Updated: 2023/02/01 02:42:33 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 14:55:10 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ int	exit_hook(t_data *data)
 
 void	inital_img_texture(t_data *data)
 {
-	data->img_text1 = mlx_xpm_file_to_image(data->mlx, "./texture/text1.xpm",
+	data->img_text1 = mlx_xpm_file_to_image(data->mlx, data->no,
 			&data->img_width_1, &data->img_height_1);
-	data->img_text2 = mlx_xpm_file_to_image(data->mlx, "./texture/text2.xpm",
+	data->img_text2 = mlx_xpm_file_to_image(data->mlx, data->we,
 			&data->img_width_2, &data->img_height_2);
-	data->img_text3 = mlx_xpm_file_to_image(data->mlx, "./texture/text3.xpm",
+	data->img_text3 = mlx_xpm_file_to_image(data->mlx, data->so,
 			&data->img_width_3, &data->img_height_3);
-	data->img_text4 = mlx_xpm_file_to_image(data->mlx, "./texture/text4.xpm",
+	data->img_text4 = mlx_xpm_file_to_image(data->mlx, data->ea,
 			&data->img_width_4, &data->img_height_4);
 	data->color_data_1 = mlx_get_data_addr(data->img_text1, &data->bpp_1,
 			&data->size_line_1, &data->endian_1);
