@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 12:14:58 by shbi              #+#    #+#             */
-/*   Updated: 2023/02/01 03:21:23 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 17:32:14 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	move(t_data *data)
 {
 	if (data->map[(int)(data->pos.x + (data->move)
 			* data->dir.x * MOVE_SPEED)][(int)data->pos.y] == '0')
-		data->pos.x += (data->move) * data->dir.x * MOVE_SPEED;
+		data->pos.x += (data->move) * data->dir.x * (MOVE_SPEED - 0.000001);
 	if (data->map[(int)data->pos.x][(int)(data->pos.y
 		+ (data->move) * data->dir.y * MOVE_SPEED)] == '0')
-		data->pos.y += (data->move) * data->dir.y * MOVE_SPEED;
+		data->pos.y += (data->move) * data->dir.y * (MOVE_SPEED - 0.000001);
 }
 
 void	slide(t_data *data)
@@ -30,10 +30,10 @@ void	slide(t_data *data)
 		= data->old_dir.x * sin((M_PI_2)) + data->dir.y * cos((M_PI_2));
 	if (data->map[(int)(data->pos.x + (data->slide)
 			* data->new_dir.x * MOVE_SPEED)][(int)data->pos.y] == '0')
-		data->pos.x += (data->slide) * data->new_dir.x * MOVE_SPEED;
+		data->pos.x += (data->slide) * data->new_dir.x * (MOVE_SPEED - 0.01);
 	if (data->map[(int)data->pos.x][(int)(data->pos.y
 		+ (data->slide) * data->new_dir.y * MOVE_SPEED)] == '0')
-		data->pos.y += (data->slide) * data->new_dir.y * MOVE_SPEED;
+		data->pos.y += (data->slide) * data->new_dir.y * (MOVE_SPEED - 0.01);
 }
 
 void	rotate(t_data	*data)

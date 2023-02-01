@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 02:56:33 by shbi              #+#    #+#             */
-/*   Updated: 2023/02/01 03:14:33 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 16:41:42 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	hit_wall(t_data *data)
 			data->map_.y = data->map_.y + data->step.y;
 			data->side = 1;
 		}
-		if (data->map[(int)data->map_.x][(int)data->map_.y] > '0')
+		if (data->map[(int)data->map_.x][(int)data->map_.y] == '1')
 			data->hit = 1;
 	}
 }

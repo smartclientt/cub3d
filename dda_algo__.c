@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 02:57:41 by shbi              #+#    #+#             */
-/*   Updated: 2023/02/01 03:31:53 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 16:40:14 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,14 @@ void	draw_ray_line(t_data *data, t_draw *draw, int x)
 	y = 0;
 	while (y < draw->draw_start)
 	{
-		my_mlx_pixel_put(data, x, y, 0xdbfdf7);
+		my_mlx_pixel_put(data, x, y, data->ceilling.color);
 		y++;
 	}
 	while (y < draw->draw_end)
 		y++;
 	while (y < WIN_HEIGHT)
 	{
-		my_mlx_pixel_put(data, x, y, 0xdbfdf7);
+		my_mlx_pixel_put(data, x, y, data->floor.color);
 		y++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 03:04:45 by shbi              #+#    #+#             */
-/*   Updated: 2023/02/01 03:33:04 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 16:01:27 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	setup_player(t_data *data)
 	data->rotate = 0;
 	data->move = 0;
 	data->slide = 0;
-	data->map[(int)data->pos.x][(int)data->pos.y] = '0';
+	data->map[(size_t)data->pos.x][(size_t)data->pos.y] = '0';
 }
 
 void	setup_color(int endian, unsigned char rgb[4], int color[4])

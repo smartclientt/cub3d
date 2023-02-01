@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 22:07:11 by ael-idri          #+#    #+#             */
-/*   Updated: 2023/02/01 03:27:49 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 15:59:55 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ bool	check_map_elem(int *player_nb, t_data *data, int i, int j)
 			return (printf("player (number) !valid\n"), false);
 		if (!check_zero_sides(data->map, i, j))
 			return (printf("player position !valid\n"), false);
-		data->pos.x = (double)j + 0.5;
-		data->pos.y = (double)i + 0.5;
+		data->pos.x = (double)j + 0.6;
+		data->pos.y = (double)i + 0.6;
 		init_dir_vector(data, i, j);
 		init_dir_vector_(data, i, j);
 	}

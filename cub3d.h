@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 02:21:25 by shbi              #+#    #+#             */
-/*   Updated: 2023/02/01 03:16:53 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 17:11:57 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
-# define MOVE_SPEED 0.1
+# define MOVE_SPEED 0.08
 # define ROT_SPEED 0.1
 # define NO 1
 # define SO 2
@@ -45,10 +45,17 @@ typedef struct s_vec
 	double	y;
 }	t_vec;
 
+typedef union u_color
+{
+	unsigned char	rgb[4];
+	int				color;
+}			t_color;
+
 typedef struct s_data
 {
 	char	**o_map;
 	char	**map;
+	char	**s_map;
 	char	*no;
 	char	*so;
 	char	*we;
@@ -121,6 +128,8 @@ typedef struct s_data
 	int		bpp_img_win;
 	int		size_line_img;
 	int		endian_img_win;
+	t_color	ceilling;
+	t_color	floor;
 }	t_data;
 
 typedef struct s_draw
@@ -177,6 +186,10 @@ void	init_data(t_data *data);
 bool	check_map(char *str, t_data *data);
 void	setup_player(t_data *data);
 void	setup_color(int endian, unsigned char rgb[4], int color[4]);
+void	switch_map(t_data *data);
+void	setup(t_data *data);
+void	protection_malloc(char **map);
+void	protection_malloc_(char *map);
 
 // DDA algorithme
 int		dda_algo(t_data *data);
