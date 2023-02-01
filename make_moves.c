@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:18:25 by shbi              #+#    #+#             */
-/*   Updated: 2023/01/29 23:55:32 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 03:25:26 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,44 +15,40 @@
 int	key_handler(int keycode, t_data *data)
 {
 	(void)data;
-	if (keycode == 13) // move up
+	if (keycode == 13)
 		data->move = 1;
-	if (keycode == 1) // move down
+	if (keycode == 1)
 		data->move = -1;
-	if (keycode == 124) // turn left
-		data->rotate = 1;
-	if (keycode == 123) // turn right
-		data->rotate = -1;
-	if (keycode == 2) // turn left
-		data->slide = 1;
-	if (keycode == 0) // turn right
-		data->slide = -1;
+	if (keycode == 124)
+		data->rotate = (data->rot_dir) * 1;
+	if (keycode == 123)
+		data->rotate = (data->rot_dir) * -1;
+	if (keycode == 2)
+		data->slide = (data->rot_dir) * 1;
+	if (keycode == 0)
+		data->slide = (data->rot_dir) * -1;
 	if (keycode == 53)
 	{
 		mlx_destroy_image(data->mlx, data->img_text1);
 		exit(0);
 	}
-		// printf("keycode = %d\n", keycode );
-	// mlx_clear_window(data->mlx, data->win);
 	return (0);
 }
 
 int	key_handler_(int keycode, t_data *data)
 {
 	(void)data;
-	if (keycode == 13) // move up
+	if (keycode == 13)
 		data->move = 0;
-	if (keycode == 1) // move down
+	if (keycode == 1)
 		data->move = 0;
-	if (keycode == 124) // turn left
+	if (keycode == 124)
 		data->rotate = 0;
-	if (keycode == 123) // turn right
+	if (keycode == 123)
 		data->rotate = 0;
-	if (keycode == 2) // turn left
+	if (keycode == 2)
 		data->slide = 0;
-	if (keycode == 0) // turn right
+	if (keycode == 0)
 		data->slide = 0;
-	// mlx_clear_window(data->mlx, data->win);
 	return (0);
 }
-
