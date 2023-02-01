@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 02:21:25 by shbi              #+#    #+#             */
-/*   Updated: 2023/02/01 17:11:57 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 23:02:54 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
 # define WIN_WIDTH	800
 # define WIN_HEIGHT	600
 
-# define MAP_WIDTH 24
-# define MAP_HEIGHT 24
 # define MOVE_SPEED 0.08
 # define ROT_SPEED 0.1
 # define NO 1
@@ -87,6 +85,8 @@ typedef struct s_data
 	int		move;
 	int		slide;
 	int		rotate;
+	int		rotate_mousse;
+	int		x_code;
 	void	*img_text1;
 	void	*img_text2;
 	void	*img_text3;
@@ -208,6 +208,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 // Key handler
 int		key_handler(int keycode, t_data *data);
 int		key_handler_(int keycode, t_data *data);
+int		key_handler__(int x, int y, t_data *data);
 int		exit_hook(t_data *data);
 // move and rotate player
 void	move(t_data *data);
@@ -220,5 +221,15 @@ void	inital_img_texture(t_data *data);
 void	build_texture(t_data *data, t_draw *draw, int x);
 void	whish_texture(t_data *data, t_draw *draw);
 void	texture_info(t_data *data);
+
+// mlx protection
+void	*mmlx_init(void);
+void	*mmlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title);
+void	*mmlx_new_image(void *mlx_ptr, int size_x, int size_y);
+char	*mmlx_get_data_addr(void *img, int *bpp, int *size_line, int *endian);
+void	mmlx_destroy_window(void *mlx_ptr, void *img_ptr);
+void	mmlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr);
+void	mmlx_destroy_image(void *mlx_ptr, void *img_ptr);
+
 
 #endif

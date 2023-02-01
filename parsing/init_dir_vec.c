@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 03:04:45 by shbi              #+#    #+#             */
-/*   Updated: 2023/02/01 16:01:27 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 21:25:03 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_dir_vector(t_data *data, int i, int j)
 {
-	if (data->map[i][j] == 'N')
+	if (data->map[i][j] == 'S')
 	{
 		data->dir.x = 0;
 		data->dir.y = 1;
@@ -22,7 +22,7 @@ void	init_dir_vector(t_data *data, int i, int j)
 		data->plane.y = 0;
 		data->rot_dir = -1;
 	}
-	else if (data->map[i][j] == 'S')
+	else if (data->map[i][j] == 'N')
 	{
 		data->dir.x = 0;
 		data->dir.y = -1;
@@ -54,7 +54,9 @@ void	init_dir_vector_(t_data *data, int i, int j)
 
 void	setup_player(t_data *data)
 {
+	data->x_code = 0;
 	data->rotate = 0;
+	data->rotate_mousse = 0;
 	data->move = 0;
 	data->slide = 0;
 	data->map[(size_t)data->pos.x][(size_t)data->pos.y] = '0';

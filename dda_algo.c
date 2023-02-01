@@ -6,7 +6,7 @@
 /*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 12:14:58 by shbi              #+#    #+#             */
-/*   Updated: 2023/02/01 17:32:14 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 22:54:09 by shbi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	slide(t_data *data)
 
 void	rotate(t_data	*data)
 {
+	if (data->rotate_mousse != 0)
+		data->rotate = data->rotate_mousse;
 	data->old_dir.x = data->dir.x;
 	data->dir.x = data->dir.x * cos((data->rotate) * ROT_SPEED)
 		- data->dir.y * sin((data->rotate) * ROT_SPEED);
@@ -48,6 +50,9 @@ void	rotate(t_data	*data)
 		- data->plane.y * sin((data->rotate) * ROT_SPEED);
 	data->plane.y = data->old_plane.x * sin((data->rotate) * ROT_SPEED)
 		+ data->plane.y * cos((data->rotate) * ROT_SPEED);
+	if (data->rotate_mousse != 0)
+		data->rotate = 0;
+	data->rotate_mousse = 0;
 }
 
 void	calcule_delta_dist(t_data *data)
@@ -86,5 +91,5 @@ void	raycasting(t_data *data)
 		draw_ray_line(data, &draw, x);
 		x++;
 	}
-	mlx_put_image_to_window(data->mlx, data->win, data->win_img, 0, 0);
+	mmlx_put_image_to_window(data->mlx, data->win, data->win_img);
 }
