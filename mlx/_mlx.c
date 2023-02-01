@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _mlx.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shbi <shbi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ael-idri <ael-idri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:26:45 by ael-idri          #+#    #+#             */
-/*   Updated: 2023/02/01 22:59:04 by shbi             ###   ########.fr       */
+/*   Updated: 2023/02/01 23:17:48 by ael-idri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,3 @@ char	*mmlx_get_data_addr(void *img, int *bpp, int *size_line, int *endian)
 	}
 	return (img_addr);
 }
-
